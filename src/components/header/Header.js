@@ -24,25 +24,27 @@ export default function Header() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h5" className={classes.title}>
-                        <Link to='/' className='link'>
-                            NOMBRE/ICONO DEL PROYECTO
-                        </Link>
-                    </Typography>
                     <Grid container direction="row" justify="flex-start" spacing={6}>
                         <Grid item>
-                                <Typography variant="h6">
-                                    <Link to='/firstPage' className='link'>
-                                        Primer página
-                                    </Link>
-                                </Typography>
+                            <Typography variant="h5" className={classes.title}>
+                                <Link to='/' className='link'>
+                                    TALLENO
+                                </Link>
+                            </Typography>
                         </Grid>
                         <Grid item>
-                                <Typography variant="h6">
-                                    <Link to='/secondpage' className='link'>
-                                        Segunda página
-                                    </Link>
-                                </Typography>
+                            <Typography variant="h6">
+                                <Link to='/monitoreo' className='link'>
+                                    Monitoreo
+                                </Link>
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h6">
+                                <Link to='/secondpage' className='link'>
+                                    Segunda página
+                                </Link>
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Toolbar>

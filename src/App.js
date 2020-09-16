@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/header/Header';
 import Home from './components/home/Home';
-import FirstPage from './components/firstpage/FirstPage';
+import Monitoreo from './components/monitoreo/Monitoreo';
 import SecondPage from './components/secondpage/SecondPage';
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
         <Header/>
         <Switch>
           <Route path="/" exact component={Home} />
-          <Route path="/firstPage" exact component={FirstPage} />
+          <Route path="/monitoreo" exact component={Monitoreo} />
           <Route path="/secondPage" exact component={SecondPage} />
         </Switch>
       </div>
