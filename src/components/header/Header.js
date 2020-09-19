@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
       flexGrow: 1,
       textAlign: 'left'
     },
+    appBar: {
+      backgroundColor: '#30c016'
+    }
   }));
 
 export default function Header() {
@@ -22,7 +25,7 @@ export default function Header() {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
                     <Grid container direction="row" justify="flex-start" spacing={6}>
                         <Grid item>
