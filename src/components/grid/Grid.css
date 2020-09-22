@@ -1,0 +1,15 @@
+.MuiDataGrid-cell{
+    outline: none!important;
+}
+.MuiDataGrid-colCell{
+    outline: none!important;
+}
+.redCapacity{
+    background-color: red;
+}
+.greenCapacity{
+    background-color: green;
+}
+.yellowCapacity{
+    background-color: yellow;
+}
