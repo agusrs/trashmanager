@@ -1,10 +1,12 @@
 import React from 'react'
 import { Grid, Button } from '@material-ui/core';
 import MonitorGrid from '../grid/Grid';
+import AlertDialog from '../dialog/AlertDialog';
 export default class Monitoreo extends React.Component {
     constructor(props){
         super(props)
         this.state = {
+            containerOverload: false,
             columns: [
                 { field: 'id', headerName: 'ID', width: 70, headerAlign: 'center' },
                 { field: 'address', headerName: 'Dirección', width: 250, headerAlign: 'center' },
@@ -41,6 +43,8 @@ export default class Monitoreo extends React.Component {
             ],
         }
         this.updateProps = this.updateProps.bind(this) 
+        this.getContainers = this.getContainers.bind(this)
+        this.handleClose = this.handleClose.bind(this)
     }
     
     updateProps() {
@@ -51,6 +55,18 @@ export default class Monitoreo extends React.Component {
             ]
         })
     }
+
+    getContainers() {
+        this.setState({
+            containerOverload: true
+        })
+    }
+
+    handleClose() {
+        this.setState({
+            containerOverload: false
+        })
+    };
 
     render() {
         return (
@@ -67,6 +83,11 @@ export default class Monitoreo extends React.Component {
                     onClick={this.updateProps}>
                     Actualizar grilla
                 </Button>
+                <Button size="medium" variant='contained'
+                    onClick={this.getContainers}>
+                    Detectar contenedores
+                </Button>
+                {this.state.containerOverload && <AlertDialog open={this.state.containerOverload} handleClose={this.handleClose} />}
             </div>
         )
     }
