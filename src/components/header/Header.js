@@ -44,8 +44,8 @@ export default function Header() {
                         </Grid>
                         <Grid item>
                             <Typography variant="h6">
-                                <Link to='/secondpage' className='link'>
-                                    Segunda página
+                                <Link to='/recoleccion' className='link'>
+                                    Recolección
                                 </Link>
                             </Typography>
                         </Grid>
