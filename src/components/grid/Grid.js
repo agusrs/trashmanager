@@ -14,7 +14,7 @@ export default class MonitorGrid extends React.Component {
 
     render() {
         return (
-        <div style={{ height: 550, width: '100%' }}>
+        <div style={{ height: 550, width: '98%' }}>
             Contenedores
             <DataGrid ref={gridOrder => this.gridInstance = gridOrder} rows={this.props.rows} columns={this.props.columns} pageSize={8} autoHeight={true} 
               hideFooterSelectedRowCount={true} className="containerGrid" 

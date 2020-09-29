@@ -17,6 +17,22 @@ import Divider from '@material-ui/core/Divider';
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(props.open);
 
+  const renderContainers = props.containers.map((c, i) => 
+    {return (<>
+      <ListItem>
+        <ListItemIcon>
+          <DeleteIcon />
+        </ListItemIcon>
+        <ListItemText
+          primary={c.id}
+        />
+        <ListItemSecondaryAction>
+          {c.garbageLevel}
+        </ListItemSecondaryAction>
+      </ListItem>
+    </>)}
+  )
+
   return (
     <div>
       <Dialog
@@ -25,7 +41,7 @@ export default function AlertDialog(props) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">Tiene x contenedores con más del 75% de capacidad <br/>Puede verlo en la grilla</DialogTitle>
+        <DialogTitle id="alert-dialog-title">Tiene {props.containers.length} {props.containers.length == 1 ? 'contenedor' : 'contenedores'} con más del 75% de capacidad <br/>Puede verlos en la grilla</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             <Grid container direction="row" justify="space-between">
@@ -43,17 +59,7 @@ export default function AlertDialog(props) {
             <Divider />
             <div>
                 <List>
-                    <ListItem>
-                        <ListItemIcon>
-                            <DeleteIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Contenedor X"
-                        />
-                        <ListItemSecondaryAction>
-                            <p>83%</p>
-                        </ListItemSecondaryAction>
-                    </ListItem>,
+                  {renderContainers}
                 </List>
             </div>
           </DialogContentText>
