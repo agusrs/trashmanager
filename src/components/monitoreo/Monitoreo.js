@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button } from '@material-ui/core';
+import { Grid, Button, Typography } from '@material-ui/core';
 import MonitorGrid from '../grid/Grid';
 import AlertDialog from '../dialog/AlertDialog';
 import CustomMap from '../map/Mapa';
@@ -8,6 +8,13 @@ import './Monitoreo.css'
 export default class Monitoreo extends React.Component {
     constructor(props){
         super(props)
+
+        this.sortModel = [
+            {
+              field: 'garbageLevel',
+              sort: 'desc',
+            },
+          ];
 
         this.id = 1
         this.data = [
@@ -123,6 +130,7 @@ export default class Monitoreo extends React.Component {
             })
             this.id++
         })
+        this.id = 1
         this.setState({
             rows: rowTemplate
         })
@@ -161,14 +169,18 @@ export default class Monitoreo extends React.Component {
     render() {
         return (
             <div>
+                <div className="gridTitle">
+                    <Typography variant="h6">
+                        Contenedores
+                    </Typography>
+                </div>
                 <Grid container direction="row" justify="space-between">
                     <Grid item xs={7}>
-                        <br/>
                         <CustomMap className="mapa" />
                     </Grid>
                     <Grid item xs={5}>
                         <div style={{width: '81%', float: 'right'}}>
-                            <MonitorGrid rows={this.state.rows} columns={this.state.columns} />
+                            <MonitorGrid rows={this.state.rows} columns={this.state.columns} sortModel={this.sortModel}/>
                         </div>
                     </Grid>
                 </Grid>
@@ -177,8 +189,8 @@ export default class Monitoreo extends React.Component {
                     Actualizar grilla
                 </Button>
                 <Button size="medium" variant='contained'
-                    onClick={() => this.getContainers(this.state.rows)}>
-                    Detectar contenedores
+                    onClick={() => clearInterval(this.interval)}>
+                    Parar get de datos
                 </Button>
                 {this.state.containerOverload && <AlertDialog open={this.state.containerOverload} handleClose={this.handleClose} containers={this.state.overloaded} />}
             </div>

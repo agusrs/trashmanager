@@ -1,6 +1,7 @@
 import React from 'react'
 import { DataGrid } from '@material-ui/data-grid';
 import './Grid.css';
+import { Typography } from '@material-ui/core';
 
 export default class MonitorGrid extends React.Component {
     constructor(props) {
@@ -15,9 +16,8 @@ export default class MonitorGrid extends React.Component {
     render() {
         return (
         <div style={{ height: 550, width: '98%' }}>
-            Contenedores
             <DataGrid ref={gridOrder => this.gridInstance = gridOrder} rows={this.props.rows} columns={this.props.columns} pageSize={8} autoHeight={true} 
-              hideFooterSelectedRowCount={true} className="containerGrid" 
+              hideFooterSelectedRowCount={true} className="containerGrid" sortModel={this.props.sortModel}
             />
         </div>
         );

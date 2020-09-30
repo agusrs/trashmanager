@@ -17,8 +17,9 @@ import Divider from '@material-ui/core/Divider';
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(props.open);
 
-  const renderContainers = props.containers.map((c, i) => 
-    {return (<>
+  const renderContainers = () => {
+    return props.containers.map((c, i) => 
+    <>
       <ListItem>
         <ListItemIcon>
           <DeleteIcon />
@@ -30,8 +31,9 @@ export default function AlertDialog(props) {
           {c.garbageLevel}
         </ListItemSecondaryAction>
       </ListItem>
-    </>)}
+    </>
   )
+  }
 
   return (
     <div>
@@ -59,7 +61,7 @@ export default function AlertDialog(props) {
             <Divider />
             <div>
                 <List>
-                  {renderContainers}
+                  {renderContainers()}
                 </List>
             </div>
           </DialogContentText>

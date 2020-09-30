@@ -4,6 +4,9 @@
 .MuiDataGrid-colCell{
     outline: none!important;
 }
+.MuiDataGrid-window{
+    overflow-x: hidden!important;
+}
 .redCapacity{
     background-color: red;
 }

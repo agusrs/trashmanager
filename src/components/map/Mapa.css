@@ -1,4 +1,7 @@
 .mapa{
     position: relative;
-    min-height: 524px;
+    min-height: 539px;
+}
+#mapDiv{
+    width: 110%;
 }
