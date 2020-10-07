@@ -1,7 +1,12 @@
-.mapa{
+.mapaMonitoreo{
     margin-left: 1%;
+    position: relative;
+    min-height: 539px;
 }
 .gridTitle{
     color: rgba(0, 0, 0, 0.87);
     margin-left: 70%;
+}
+#mapDiv{
+    width: 110%;
 }

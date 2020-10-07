@@ -33,8 +33,8 @@ class CustomMap extends Component {
   render() {
 
     return (
-      <div id="mapDiv">
-            <Map ref={(ref) =>  {this.map = ref; }} center={{lat:-39.130060242135094, lng: -66.1809052440923}} zoom={4} className="mapa" >
+      <div id={this.props.id}>
+            <Map ref={(ref) =>  {this.map = ref; }} center={{lat:-39.130060242135094, lng: -66.1809052440923}} zoom={4} className={this.props.className}>
               <TileLayer url={tailUrl} />
 
               {/* {enableClusters && 

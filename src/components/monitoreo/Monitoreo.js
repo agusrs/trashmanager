@@ -176,7 +176,7 @@ export default class Monitoreo extends React.Component {
                 </div>
                 <Grid container direction="row" justify="space-between">
                     <Grid item xs={7}>
-                        <CustomMap className="mapa" />
+                        <CustomMap id="mapDiv" className="mapaMonitoreo" />
                     </Grid>
                     <Grid item xs={5}>
                         <div style={{width: '81%', float: 'right'}}>

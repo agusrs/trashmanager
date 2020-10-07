@@ -1,0 +1,19 @@
+#initialItems{
+    opacity: 1;
+    -webkit-transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -ms-transition: opacity 1s ease-in-out;
+    -o-transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out;
+}
+
+#initialItems.fade {
+    opacity:0;
+}
+
+.mapaRecoleccion{
+    margin-top: 30px;
+    margin-left: 1%;
+    position: relative;
+    min-height: 500px;
+}
