@@ -122,15 +122,28 @@ export default class Monitoreo extends React.Component {
             overloaded: []
         })
         let rowTemplate = []
-        data.map(d => {
-            rowTemplate.push({
-                id: this.id,
-                address: d.calle_nombre + ' ' + d.calle_altura,
-                garbageLevel: Math.floor(Math.random() * 100) + 1 + '%'
+        if (!this.props.data) {
+            data.map(d => {
+                rowTemplate.push({
+                    id: this.id,
+                    address: d.calle_nombre + ' ' + d.calle_altura,
+                    garbageLevel: Math.floor(Math.random() * 100) + 1 + '%',
+                    isCollected: false
+                })
+                this.id++
             })
-            this.id++
-        })
-        this.id = 1
+            this.id = 1
+        } else {
+            this.props.data.map(d => {
+                rowTemplate.push({
+                    id: d.id,
+                    address: d.address,
+                    garbageLevel: Math.floor(Math.random() * 100) + 1 + '%',
+                    isCollected: d.isCollected
+                })
+            })
+        }
+        this.props.dataUpdater(rowTemplate)
         this.setState({
             rows: rowTemplate
         })

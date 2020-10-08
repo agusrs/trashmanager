@@ -7,14 +7,21 @@ import Monitoreo from './components/monitoreo/Monitoreo';
 import Recoleccion from './components/recoleccion/Recoleccion';
 
 function App() {
+
+  const [data, setData] = React.useState(null)
+
+  const update = (newData) => {
+    setData(newData)
+  }
+
   return (
     <Router>
       <div className="App">
         <Header/>
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/monitoreo" exact component={Monitoreo} />
-          <Route path="/recoleccion" exact component={Recoleccion} />
+          <Route path="/" exact component={Home}/>
+          <Route path="/monitoreo" exact render={props => <Monitoreo {...props} data={data} dataUpdater={update} />} />
+          <Route path="/recoleccion" exact render={props => <Recoleccion {...props} data={data} dataUpdater={update} />} />
         </Switch>
       </div>
     </Router>

@@ -73,7 +73,7 @@ export default class Recoleccion extends React.Component {
                         <TruckSelect selected={this.state.selectedTruck} data={this.data} onChange={(truck) => this.changeTruck(truck)} />
                     </Grid>
                     <Grid item xs={sizeButton} >
-                        <Button size="medium" variant='contained'
+                        <Button size="medium" variant='contained' disabled={!this.state.selectedTruck}
                             onClick={this.generateRoute}>
                             Generar ruta
                         </Button>
