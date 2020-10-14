@@ -3,6 +3,7 @@ import TruckSelect from '../select/TruckSelect';
 import { Grid, Button, Typography } from '@material-ui/core';
 import CustomMap from '../map/Mapa';
 import './Recoleccion.css'
+import CustomSnackbar from '../snackbar/Snackbar';
 
 export default class Recoleccion extends React.Component {
     constructor(props){
@@ -11,6 +12,10 @@ export default class Recoleccion extends React.Component {
         this.state = {
             selectedTruck: null,
             initialPage: true,
+            showSnackbar: false,
+            snackbarTimer: 6000,
+            snackbarType: "",
+            snackbarMessage: ""
         }
         
         this.data = [
@@ -38,11 +43,32 @@ export default class Recoleccion extends React.Component {
 
         this.changeTruck = this.changeTruck.bind(this)
         this.generateRoute = this.generateRoute.bind(this)
-        this.renderInitialItems = this.renderInitialItems.bind(this )
+        this.renderInitialItems = this.renderInitialItems.bind(this)
+        this.openSnackbar = this.openSnackbar.bind(this)
+        this.closeSnackbar = this.closeSnackbar.bind(this)
     }
 
     componentDidMount() {
-        
+        if (!this.props.data) {
+            this.openSnackbar('warning', 'Ingrese a la sección de monitoreo primero, para obtener los datos de los contenedores.', 6000)
+        }
+    }
+
+    openSnackbar ( type, message, time ) {
+        this.setState( ( prevState ) => ( {
+            ...prevState,
+            showSnackbar: true,
+            snackbarType: type,
+            snackbarMessage: message,
+            snackbarTimer: time !== undefined ? time : 5000
+        } ) )
+    }
+
+    closeSnackbar () {
+        this.setState( ( prevState ) => ( {
+            ...prevState,
+            showSnackbar: false
+        } ) )
     }
 
     changeTruck(truck) {
@@ -52,16 +78,20 @@ export default class Recoleccion extends React.Component {
     }
 
     generateRoute() {
-        if (this.state.initialPage) {
-            document.getElementById("initialItems").classList.toggle('fade');
-            setTimeout(() => {
-                this.setState({
-                    initialPage: false
-                })
-                document.getElementById("initialItems").classList.toggle('fade');
-            }, 1000)
+        let orderedRoute
+        let data = this.props.data
+        if (this.props?.data?.length === 0 || !this.props.data) {
+            this.openSnackbar('error', 'No hay datos de los contenedores!', 6000)
         } else {
-
+            if (this.state.initialPage) {
+                document.getElementById("initialItems").classList.toggle('fade');
+                setTimeout(() => {
+                    this.setState({
+                        initialPage: false
+                    })
+                    document.getElementById("initialItems").classList.toggle('fade');
+                }, 1000)
+            }
         }
     }
 
@@ -101,6 +131,7 @@ export default class Recoleccion extends React.Component {
                         </Grid>   
                     </div>
                 }
+                <CustomSnackbar open={this.state.showSnackbar} handleClose={this.closeSnackbar} timer={this.state.snackbarTimer} type={this.state.snackbarType} message={this.state.snackbarMessage} />
             </div>
         )
     }
