@@ -84,19 +84,21 @@ export default class Recoleccion extends React.Component {
         if (this.props?.data?.length === 0 || !this.props.data) {
             this.openSnackbar('error', 'No hay datos de los contenedores!', 6000)
         } else {
+            var totalGarbage = 0
             data.map(c => {
-                if (parseInt(c.garbageLevel) > 74){
+                if (parseInt(c.garbageLevel) > 74 && (totalGarbage + parseInt(c.garbageLevel)) < 1000){
                     orderedRoute.push(c)
                     c.isCollected = true
                 }
             })
             data.map(c => {
-                if (parseInt(c.garbageLevel) > 49 && parseInt(c.garbageLevel) < 75 && orderedRoute.length < (data.length/2)) {
+                if (parseInt(c.garbageLevel) > 49 && parseInt(c.garbageLevel) < 75  && (totalGarbage + parseInt(c.garbageLevel)) < 1000) {
                     orderedRoute.push(c)
                     c.isCollected = true
                 }
             })
             orderedRoute.sort(this.compare)
+            this.props.dataUpdater(data)
             this.setState({
                 route: orderedRoute
             })
