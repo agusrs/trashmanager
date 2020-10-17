@@ -15,7 +15,8 @@ export default class Recoleccion extends React.Component {
             showSnackbar: false,
             snackbarTimer: 6000,
             snackbarType: "",
-            snackbarMessage: ""
+            snackbarMessage: "",
+            route: [],
         }
         
         this.data = [
@@ -78,11 +79,27 @@ export default class Recoleccion extends React.Component {
     }
 
     generateRoute() {
-        let orderedRoute
+        let orderedRoute = []
         let data = this.props.data
         if (this.props?.data?.length === 0 || !this.props.data) {
             this.openSnackbar('error', 'No hay datos de los contenedores!', 6000)
         } else {
+            data.map(c => {
+                if (parseInt(c.garbageLevel) > 74){
+                    orderedRoute.push(c)
+                    c.isCollected = true
+                }
+            })
+            data.map(c => {
+                if (parseInt(c.garbageLevel) > 49 && parseInt(c.garbageLevel) < 75 && orderedRoute.length < (data.length/2)) {
+                    orderedRoute.push(c)
+                    c.isCollected = true
+                }
+            })
+            orderedRoute.sort(this.compare)
+            this.setState({
+                route: orderedRoute
+            })
             if (this.state.initialPage) {
                 document.getElementById("initialItems").classList.toggle('fade');
                 setTimeout(() => {
@@ -93,6 +110,16 @@ export default class Recoleccion extends React.Component {
                 }, 1000)
             }
         }
+    }
+
+    compare( a, b ) {
+        if ( parseInt(a.garbageLevel) > parseInt(b.garbageLevel) ){
+            return -1;
+        }
+        if ( parseInt(a.garbageLevel) < parseInt(b.garbageLevel) ){
+            return 1;
+        }
+        return 0;
     }
 
     renderInitialItems(sizeInput, sizeButton){
