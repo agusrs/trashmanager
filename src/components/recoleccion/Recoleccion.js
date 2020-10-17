@@ -4,6 +4,7 @@ import { Grid, Button, Typography } from '@material-ui/core';
 import CustomMap from '../map/Mapa';
 import './Recoleccion.css'
 import CustomSnackbar from '../snackbar/Snackbar';
+import RouteList from '../routeList/RouteList';
 
 export default class Recoleccion extends React.Component {
     constructor(props){
@@ -156,6 +157,12 @@ export default class Recoleccion extends React.Component {
                             </Grid>
                             <Grid item xs={5}>
                                 {this.renderInitialItems(6,3)}
+                                <div>
+                                    <Typography variant="h6">
+                                        Ruta
+                                    </Typography>
+                                    <RouteList containers={this.state.route} />
+                                </div>
                             </Grid>
                         </Grid>   
                     </div>
