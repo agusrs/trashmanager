@@ -4,6 +4,7 @@ import MonitorGrid from '../grid/Grid';
 import AlertDialog from '../dialog/AlertDialog';
 import CustomMap from '../map/Mapa';
 import './Monitoreo.css'
+import {dataContainers} from '../../utils/dataContainers'
 
 export default class Monitoreo extends React.Component {
     constructor(props){
@@ -17,62 +18,62 @@ export default class Monitoreo extends React.Component {
           ];
 
         this.id = 1
-        this.data = [
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Av Callao',
-                calle_altura: '7523'
-            },
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Corrientes',
-                calle_altura: '2000'
-            },
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Santa fe',
-                calle_altura: '1800'
-            },
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Carlos Pellegrini',
-                calle_altura: '900'
-            },
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Mitre',
-                calle_altura: '3020'
-            },
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Pueyrredon',
-                calle_altura: '4300'
-            },
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Rio negro',
-                calle_altura: '1460'
-            },
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Tucuman',
-                calle_altura: '2300'
-            },
-            {
-                lat: "x",
-                long: "y",
-                calle_nombre: 'Rosales',
-                calle_altura: '300'
-            }
-        ]
+        // this.data = [
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Av Callao',
+        //         calle_altura: '7523'
+        //     },
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Corrientes',
+        //         calle_altura: '2000'
+        //     },
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Santa fe',
+        //         calle_altura: '1800'
+        //     },
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Carlos Pellegrini',
+        //         calle_altura: '900'
+        //     },
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Mitre',
+        //         calle_altura: '3020'
+        //     },
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Pueyrredon',
+        //         calle_altura: '4300'
+        //     },
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Rio negro',
+        //         calle_altura: '1460'
+        //     },
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Tucuman',
+        //         calle_altura: '2300'
+        //     },
+        //     {
+        //         lat: "x",
+        //         long: "y",
+        //         calle_nombre: 'Rosales',
+        //         calle_altura: '300'
+        //     }
+        // ]
 
         this.state = {
             containerOverload: false,
@@ -102,14 +103,13 @@ export default class Monitoreo extends React.Component {
             ],
             rows: [],
         }
-        this.updateProps = this.updateProps.bind(this) 
         this.getContainers = this.getContainers.bind(this)
         this.handleClose = this.handleClose.bind(this)
         this.convertData = this.convertData.bind(this)
     }
 
     componentDidMount() {
-        this.convertData(this.data)
+        this.convertData(dataContainers)
         this.interval = setInterval(() => this.convertData(this.data), 10000);
     }
 
@@ -148,15 +148,6 @@ export default class Monitoreo extends React.Component {
             rows: rowTemplate
         })
         this.getContainers(rowTemplate)
-    }
-    
-    updateProps() {
-        this.setState({
-            rows: [
-                { id: 1, address: 'Av Callao 7523', garbageLevel: '35%' },
-                { id: 2, address: 'Corrientes 2000 ', garbageLevel: '42%' },
-            ]
-        })
     }
 
     getContainers(rows) {
@@ -197,10 +188,6 @@ export default class Monitoreo extends React.Component {
                         </div>
                     </Grid>
                 </Grid>
-                <Button size="medium" variant='contained'
-                    onClick={this.updateProps}>
-                    Actualizar grilla
-                </Button>
                 <Button size="medium" variant='contained'
                     onClick={() => clearInterval(this.interval)}>
                     Parar get de datos

@@ -90,12 +90,14 @@ export default class Recoleccion extends React.Component {
                 if (parseInt(c.garbageLevel) > 74 && (totalGarbage + parseInt(c.garbageLevel)) < 1000){
                     orderedRoute.push(c)
                     c.isCollected = true
+                    totalGarbage = totalGarbage + parseInt(c.garbageLevel)
                 }
             })
             data.map(c => {
                 if (parseInt(c.garbageLevel) > 49 && parseInt(c.garbageLevel) < 75  && (totalGarbage + parseInt(c.garbageLevel)) < 1000) {
                     orderedRoute.push(c)
                     c.isCollected = true
+                    totalGarbage = totalGarbage + parseInt(c.garbageLevel)
                 }
             })
             orderedRoute.sort(this.compare)

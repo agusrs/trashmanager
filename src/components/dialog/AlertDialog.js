@@ -13,26 +13,40 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid, Typography } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import './AlertDialog.css'
 
 export default function AlertDialog(props) {
   const [open, setOpen] = React.useState(props.open);
 
   const renderContainers = () => {
+    let stop = false
     return props.containers.map((c, i) => 
-    <>
-      <ListItem>
-        <ListItemIcon>
-          <DeleteIcon />
-        </ListItemIcon>
-        <ListItemText
-          primary={c.id}
-        />
-        <ListItemSecondaryAction>
-          {c.garbageLevel}
-        </ListItemSecondaryAction>
-      </ListItem>
-    </>
-  )
+    {
+      if (i < 7){
+        return <>
+          <ListItem>
+            <ListItemIcon>
+              <DeleteIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary={c.id}
+            />
+            <ListItemSecondaryAction>
+              {c.garbageLevel}
+            </ListItemSecondaryAction>
+          </ListItem>
+        </>
+      } else if (!stop){
+        stop = true
+        return <>
+          <ListItem>
+            <ListItemText
+              primary={'y ' + (props.containers.length - i) + ' contenedores más'}
+            />
+          </ListItem>
+        </>
+      } 
+    })
   }
 
   return (
@@ -44,7 +58,7 @@ export default function AlertDialog(props) {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">Tiene {props.containers.length} {props.containers.length == 1 ? 'contenedor' : 'contenedores'} con más del 75% de capacidad <br/>Puede verlos en la grilla</DialogTitle>
-        <DialogContent>
+        <DialogContent className="containersDialogRoot">
           <DialogContentText id="alert-dialog-description">
             <Grid container direction="row" justify="space-between">
                 <Grid item>
