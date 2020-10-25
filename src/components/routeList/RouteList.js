@@ -6,13 +6,11 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
   root: {
     
-  },
-  title: {
-    fontSize: 14,
   },
   pos: {
     
@@ -30,20 +28,25 @@ export default function RouteList(props) {
     <div className={classes.container}>
         {props.containers.map((c, i) => 
         <Card className={classes.root} variant="outlined">
-        <CardContent>
-            <Typography className={classes.title} color="textSecondary">
-            ID: {c.id}
-            </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-            Dirección: {c.address}
-            </Typography>
-            <Typography className={classes.pos} color="textSecondary">
-            Capacidad: {c.garbageLevel}
-            </Typography>
-        </CardContent>
-        <CardActions>
-            
-        </CardActions>
+          <CardContent>
+            <Grid container direction="row" justify="space-between" alignItems="center">
+              <Grid item >
+                <Typography className={classes.pos} color="textSecondary">
+                  ID: {c.id}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography className={classes.pos} color="textSecondary">
+                  Dirección: {c.address}
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography className={classes.pos} color="textSecondary">
+                  Capacidad: {c.garbageLevel}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
         </Card>
         )}
     </div>
