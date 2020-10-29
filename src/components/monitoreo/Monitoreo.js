@@ -18,62 +18,6 @@ export default class Monitoreo extends React.Component {
           ];
 
         this.id = 1
-        // this.data = [
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Av Callao',
-        //         calle_altura: '7523'
-        //     },
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Corrientes',
-        //         calle_altura: '2000'
-        //     },
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Santa fe',
-        //         calle_altura: '1800'
-        //     },
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Carlos Pellegrini',
-        //         calle_altura: '900'
-        //     },
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Mitre',
-        //         calle_altura: '3020'
-        //     },
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Pueyrredon',
-        //         calle_altura: '4300'
-        //     },
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Rio negro',
-        //         calle_altura: '1460'
-        //     },
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Tucuman',
-        //         calle_altura: '2300'
-        //     },
-        //     {
-        //         lat: "x",
-        //         long: "y",
-        //         calle_nombre: 'Rosales',
-        //         calle_altura: '300'
-        //     }
-        // ]
 
         this.state = {
             containerOverload: false,
@@ -106,15 +50,20 @@ export default class Monitoreo extends React.Component {
         this.getContainers = this.getContainers.bind(this)
         this.handleClose = this.handleClose.bind(this)
         this.convertData = this.convertData.bind(this)
+        this.markerClick = this.markerClick.bind(this)
     }
 
     componentDidMount() {
         this.convertData(dataContainers)
-        this.interval = setInterval(() => this.convertData(this.data), 10000);
+        this.interval = setInterval(() => this.convertData(dataContainers), 10000);
     }
 
     componentWillUnmount() {
         clearInterval(this.interval)
+    }
+
+    markerClick(args){
+        console.log(args)
     }
 
     convertData(data) {
@@ -128,7 +77,9 @@ export default class Monitoreo extends React.Component {
                     id: this.id,
                     address: d.calle_nombre + ' ' + d.calle_altura,
                     garbageLevel: Math.floor(Math.random() * 100) + 1 + '%',
-                    isCollected: false
+                    isCollected: false,
+                    long: d.long,
+                    lat: d.lat
                 })
                 this.id++
             })
@@ -139,7 +90,9 @@ export default class Monitoreo extends React.Component {
                     id: d.id,
                     address: d.address,
                     garbageLevel: Math.floor(Math.random() * 100) + 1 + '%',
-                    isCollected: d.isCollected
+                    isCollected: d.isCollected,
+                    long: d.long,
+                    lat: d.lat
                 })
             })
         }
@@ -180,7 +133,8 @@ export default class Monitoreo extends React.Component {
                 </div>
                 <Grid container direction="row" justify="space-between">
                     <Grid item xs={7}>
-                        <CustomMap id="mapDiv" className="mapaMonitoreo" />
+                        <CustomMap id="mapDiv" className="mapaMonitoreo" markers={this.state.rows} enableClusters={true} hidePins={false} 
+                        onMarkerClick={this.markerClick} />
                     </Grid>
                     <Grid item xs={5}>
                         <div style={{width: '81%', float: 'right'}}>
