@@ -51,6 +51,7 @@ export default class Monitoreo extends React.Component {
         this.handleClose = this.handleClose.bind(this)
         this.convertData = this.convertData.bind(this)
         this.markerClick = this.markerClick.bind(this)
+        this.rowClick = this.rowClick.bind(this)
     }
 
     componentDidMount() {
@@ -64,6 +65,11 @@ export default class Monitoreo extends React.Component {
 
     markerClick(args){
         console.log(args)
+    }
+
+    rowClick(args) {
+        if(this.map.map.leafletElement)
+            this.map.map.leafletElement.flyTo([args.data.lat, args.data.long], 17, { duration: 0.50 })
     }
 
     convertData(data) {
@@ -133,12 +139,12 @@ export default class Monitoreo extends React.Component {
                 </div>
                 <Grid container direction="row" justify="space-between">
                     <Grid item xs={7}>
-                        <CustomMap id="mapDiv" className="mapaMonitoreo" markers={this.state.rows} enableClusters={true} hidePins={false} 
+                        <CustomMap id="mapDiv" onRef={ref => (this.map = ref)} className="mapaMonitoreo" markers={this.state.rows} enableClusters={true} hidePins={false} 
                         onMarkerClick={this.markerClick} />
                     </Grid>
                     <Grid item xs={5}>
                         <div style={{width: '81%', float: 'right'}}>
-                            <MonitorGrid rows={this.state.rows} columns={this.state.columns} sortModel={this.sortModel}/>
+                            <MonitorGrid rowClick={this.rowClick} onRef={ref => (this.gridInstance = ref)} rows={this.state.rows} columns={this.state.columns} sortModel={this.sortModel}/>
                         </div>
                     </Grid>
                 </Grid>
