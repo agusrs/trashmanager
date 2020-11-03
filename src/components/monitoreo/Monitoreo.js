@@ -139,7 +139,7 @@ export default class Monitoreo extends React.Component {
                 </div>
                 <Grid container direction="row" justify="space-between">
                     <Grid item xs={7}>
-                        <CustomMap id="mapDiv" onRef={ref => (this.map = ref)} className="mapaMonitoreo" markers={this.state.rows} enableClusters={true} hidePins={false} 
+                        <CustomMap id="mapDivMonitoreo" onRef={ref => (this.map = ref)} className="mapaMonitoreo" markers={this.state.rows} enableClusters={true} hidePins={false} 
                         onMarkerClick={this.markerClick} />
                     </Grid>
                     <Grid item xs={5}>

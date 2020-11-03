@@ -17,3 +17,7 @@
     position: relative;
     min-height: 520px;
 }
+
+#mapDivRecoleccion{
+    width: 100%;
+}

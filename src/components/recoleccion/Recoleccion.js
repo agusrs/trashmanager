@@ -155,7 +155,7 @@ export default class Recoleccion extends React.Component {
                     <div>
                         <Grid container direction="row" justify="space-between">
                             <Grid item xs={7}>
-                                <CustomMap className="mapaRecoleccion" />
+                                <CustomMap className="mapaRecoleccion" id="mapDivRecoleccion" onRef={ref => (this.map = ref)}  markers={this.state.route} enableClusters={true} hidePins={false} onMarkerClick={() => console.log("")} />
                             </Grid>
                             <Grid item xs={5}>
                                 {this.renderInitialItems(6,3)}

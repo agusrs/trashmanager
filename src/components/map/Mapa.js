@@ -56,7 +56,7 @@ class CustomMap extends Component {
 
     return (
       <div id={this.props.id}>
-            <Map ref={(ref) =>  {this.map = ref; }} center={this.props.markers.length > 0 ? {lat:this.props.markers[193]?.lat, lng: this.props.markers[193]?.long} : {lat:-39.130060242135094, lng: -66.1809052440923}} zoom={12} className={this.props.className}>
+            <Map ref={(ref) =>  {this.map = ref; }} center={this.props.markers.length > 0 ? (this.props.className == "mapaMonitoreo" ? {lat:this.props.markers[193]?.lat, lng: this.props.markers[193]?.long} : {lat:this.props.markers[0]?.lat, lng: this.props.markers[0]?.long}) : {lat:-39.130060242135094, lng: -66.1809052440923}} zoom={12} className={this.props.className}>
               <TileLayer url={tailUrl} />
 
               {this.props.enableClusters && 
