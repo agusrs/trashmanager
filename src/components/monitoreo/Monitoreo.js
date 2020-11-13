@@ -56,7 +56,7 @@ export default class Monitoreo extends React.Component {
 
     componentDidMount() {
         this.convertData(dataContainers)
-        this.interval = setInterval(() => this.convertData(dataContainers), 10000);
+        this.interval = setInterval(() => this.convertData(dataContainers), 90000);
     }
 
     componentWillUnmount() {
