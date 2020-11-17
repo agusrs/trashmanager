@@ -10,21 +10,7 @@ import './Mapa.css'
 import DeleteIcon from '../../utils/baseline_delete_black_18dp.png';
 import 'leaflet.polyline.snakeanim/L.Polyline.SnakeAnim.js'
 
-const icon = new L.Icon({
-  iconUrl: DeleteIcon,
-  iconSize: [30, 30],
-  iconAnchor: [20, 40],
-  popupAnchor: L.Icon.Default.prototype.options.popupAnchor,
-  tooltipAnchor: L.Icon.Default.prototype.options.tooltipAnchor,
-  // shadowUrl: L.Icon.Default.prototype.options.shadowUrl,
-  // shadowRetinaUrl: L.Icon.Default.prototype.options.shadowRetinaUrl,
-  // shadowSize: L.Icon.Default.prototype.options.shadowSize,
-  // shadowAnchor: L.Icon.Default.prototype.options.shadowAnchor,
-  className: L.Icon.Default.prototype.options.className
-})
-
 const tailUrl = "https://{s}.tile.osm.org/{z}/{x}/{y}.png";
-let auxLines = []
 class CustomMap extends Component {
   constructor(props) {
 
@@ -33,6 +19,7 @@ class CustomMap extends Component {
     this.state = {
       
     }
+    this.auxLines = []
     this.drawPolyLine = this.drawPolyLine.bind(this)
     this.drawRoute = this.drawRoute.bind(this)
   }
@@ -41,16 +28,41 @@ class CustomMap extends Component {
     this.props.onRef(this)
 
     this.map.leafletElement.addControl(new window.L.Control.Fullscreen())
-    this.drawPolyLine(auxLines)
+    this.drawPolyLine(this.auxLines)
   }
 
   componentDidUpdate({ prevProps, prevState }) {
     
   }
 
+  createIcon(garbageLevel) {
+    let className
+    if ( garbageLevel >= 75 ) {
+      className = "redMarker"
+    } else if ( garbageLevel >= 50 ) {
+        className = "yellowMarker"
+    } else if ( garbageLevel == null ) {
+        return 
+    } else {
+        className = "greenMarker"
+    }
+    return new L.Icon({
+      iconUrl: DeleteIcon,
+      iconSize: [30, 30],
+      iconAnchor: [20, 40],
+      popupAnchor: L.Icon.Default.prototype.options.popupAnchor,
+      tooltipAnchor: L.Icon.Default.prototype.options.tooltipAnchor,
+      // shadowUrl: L.Icon.Default.prototype.options.shadowUrl,
+      // shadowRetinaUrl: L.Icon.Default.prototype.options.shadowRetinaUrl,
+      // shadowSize: L.Icon.Default.prototype.options.shadowSize,
+      // shadowAnchor: L.Icon.Default.prototype.options.shadowAnchor,
+      className: L.Icon.Default.prototype.options.className + " " + className
+    })
+  }
+
   drawMarkers() {
     return this.props.markers.map(m => 
-      <Marker position={[m.lat,m.long]} icon={icon} onclick={this.props.onMarkerClick} id={m.id} >
+      <Marker position={[m.lat,m.long]} icon={this.createIcon(parseInt(m.garbageLevel))} onclick={this.props.onMarkerClick} id={m.id} >
         <Popup>ID: {m.id}<br/>Dirección: {m.address}<br/>Capacidad: {m.garbageLevel}</Popup>
       </Marker>
     )
@@ -81,9 +93,9 @@ class CustomMap extends Component {
         const positionTo = [containers[i + 1]?.lat, containers[i + 1]?.long]
 
         const polyline = L.polyline([positionFrom, positionTo], {color:"#004209"})
-        const staticPolyline = <Polyline key={"line-" + i} positions={[positionFrom, positionTo]} color={"#FFFFFF"}></Polyline>;
+        const staticPolyline = <Polyline key={"line-" + i} positions={[positionFrom, positionTo]} color={"#8a8a8a"}></Polyline>;
         
-        auxLines.push(polyline);
+        this.auxLines.push(polyline);
         auxStaticLines.push(staticPolyline)
       }
     }
