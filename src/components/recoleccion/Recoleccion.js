@@ -18,6 +18,7 @@ export default class Recoleccion extends React.Component {
             snackbarType: "",
             snackbarMessage: "",
             route: [],
+            loadMap: false
         }
         
         this.data = [
@@ -48,6 +49,7 @@ export default class Recoleccion extends React.Component {
         this.renderInitialItems = this.renderInitialItems.bind(this)
         this.openSnackbar = this.openSnackbar.bind(this)
         this.closeSnackbar = this.closeSnackbar.bind(this)
+        this.streetRoute = this.streetRoute.bind(this)
     }
 
     componentDidMount() {
@@ -104,7 +106,7 @@ export default class Recoleccion extends React.Component {
             this.props.dataUpdater(data)
             this.setState({
                 route: orderedRoute
-            })
+            }, this.streetRoute)
             if (this.state.initialPage) {
                 document.getElementById("initialItems").classList.toggle('fade');
                 setTimeout(() => {
@@ -114,6 +116,59 @@ export default class Recoleccion extends React.Component {
                     document.getElementById("initialItems").classList.toggle('fade');
                 }, 1000)
             }
+        }
+    }
+    streetRoute() {
+        let auxAddresses = this.state.route
+        let auxPositions = []
+        let auxPositionsString = ""
+        let streetRoute = []
+        let routeTime = ""
+        let routeDistance = ""
+        auxAddresses.forEach(a => {
+            auxPositions.push([a.long, a.lat])
+        })
+        auxPositionsString = auxPositions.join(';')
+        if (auxAddresses.length > 1) {
+            fetch("https://router.project-osrm.org/route/v1/driving/" + auxPositionsString + "?overview=simplified&geometries=geojson&steps=true")
+                .then((res) => {
+                    res.json().then((json) => {
+                        json.routes[0].geometry.coordinates.forEach(c => {
+                            streetRoute.push({ lat: c[1], long: c[0] })
+                        })
+                        routeTime = "Duración: " + (json.routes[0].duration / 60).toFixed(0) + " minutos"
+                        routeDistance = "Recorrido: " + (json.routes[0].distance / 1000).toFixed(2) + " Km"
+                        this.setState({
+                            streetRoute: streetRoute,
+                            routeTime: routeTime,
+                            routeDistance: routeDistance,
+                            loadMap: true
+                        })
+                    })
+                        .catch((err) => {
+                            this.setState({
+                                streetRoute: [],
+                                routeTime: "No disponible",
+                                routeDistance: "No disponible",
+                                openPopupRouteStreet: true,
+                                loadMap: true
+                            })
+                        })
+                })
+                .catch((err) => {
+                    this.setState({
+                        streetRoute: [],
+                        routeTime: "No disponible",
+                        routeDistance: "No disponible",
+                        openPopupRouteStreet: true,
+                        loadMap: true
+                    })
+
+                })
+        } else {
+            this.setState({
+                loadMap: true
+            })
         }
     }
 
@@ -155,7 +210,7 @@ export default class Recoleccion extends React.Component {
                     <div>
                         <Grid container direction="row" justify="space-between">
                             <Grid item xs={7}>
-                                <CustomMap className="mapaRecoleccion" id="mapDivRecoleccion" onRef={ref => (this.map = ref)}  markers={this.state.route} enableClusters={true} hidePins={false} onMarkerClick={() => console.log("")} />
+                                {this.state.loadMap && <CustomMap className="mapaRecoleccion" id="mapDivRecoleccion" onRef={ref => (this.map = ref)}  markers={this.state.route} enableClusters={true} hidePins={false} streetRoute={this.state.streetRoute} route={true} onMarkerClick={() => console.log("")} />}
                             </Grid>
                             <Grid item xs={5}>
                                 {this.renderInitialItems(6,3)}
