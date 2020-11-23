@@ -5,6 +5,7 @@ import AlertDialog from '../dialog/AlertDialog';
 import CustomMap from '../map/Mapa';
 import './Monitoreo.css'
 import {dataContainers} from '../../utils/dataContainers'
+import Tabletop from "tabletop";
 
 export default class Monitoreo extends React.Component {
     constructor(props){
@@ -52,6 +53,7 @@ export default class Monitoreo extends React.Component {
         this.convertData = this.convertData.bind(this)
         this.markerClick = this.markerClick.bind(this)
         this.rowClick = this.rowClick.bind(this)
+        this.getExcelData = this.getExcelData.bind(this)
     }
 
     componentDidMount() {
@@ -102,11 +104,25 @@ export default class Monitoreo extends React.Component {
                 })
             })
         }
+        this.getExcelData(rowTemplate)
         this.props.dataUpdater(rowTemplate)
         this.setState({
             rows: rowTemplate
         })
         this.getContainers(rowTemplate)
+    }
+
+    getExcelData(rows) {
+        Tabletop.init({
+            key: "https://docs.google.com/spreadsheets/d/11taRH1qXxNYnYZixOxeR26NfghlN4kZrSgF4Xh6UzVQ/edit?usp=sharing",
+            simpleSheet: true
+          })
+        .then((data) => {
+            console.log(data)
+        })
+        .catch((err) => {
+            console.log(err)
+        });
     }
 
     getContainers(rows) {
