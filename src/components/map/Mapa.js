@@ -107,7 +107,7 @@ class CustomMap extends Component {
       this.map.leafletElement.addLayer(route);
       route.snakeIn();
       route.on("snakeend",(p) => {
-        console.log("terminó")
+ 
         p.target.remove()
         // p.target.addTo(this.map.leafletElement)
         this.drawPolyLine(polylines)

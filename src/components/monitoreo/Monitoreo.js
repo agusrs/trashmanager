@@ -114,7 +114,7 @@ export default class Monitoreo extends React.Component {
 
     getExcelData(rows) {
         Tabletop.init({
-            key: "https://docs.google.com/spreadsheets/d/11taRH1qXxNYnYZixOxeR26NfghlN4kZrSgF4Xh6UzVQ/edit?usp=sharing",
+            key: "https://docs.google.com/spreadsheets/d/1CB2fPtrgnfCXO7Ix3mFJopDamTg9Bxa9OleRZpqVJew/edit?usp=sharing",
             simpleSheet: true
           })
         .then((data) => {
